@@ -1,0 +1,29 @@
+ul, li
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.panel
+{
+    transition: 1s easy;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+@media (max-width: 800px)
+{
+    .panel
+    {
+        width: 100%;
+    }
+}
+
+@media (min-width: 800px)
+{
+    .panel
+    {
+        width: 40%;
+    }
+}
