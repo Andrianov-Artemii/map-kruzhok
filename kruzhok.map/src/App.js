@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
+
 import './App.css';
+
 
 //Components
 import Map from './Components/Map';
@@ -7,9 +10,9 @@ import Loader from './Components/Loader';
 import Panel from './Components/Panel';
 import MenuIcon from './Components/Icons/MenuIcon';
 import ModalPanel from './Components/ModalPanel';
+import Catalog from './Components/Catalog';
 
-function App() {
-
+function App(props) {
   const [isOpenPanel, setOpenPanel] = useState(true);
   const [data, setData] = useState(null);
   const [pointsOnPanel, changePointsOnPanel] = useState([]); 
@@ -21,11 +24,13 @@ function App() {
 
   function getPoints()
   {
-    fetch('data.json')
+    fetch('/data.json')
     .then((res) => res.json())
     .catch((res) => null)  
-    .then((data) => {
-      setData(data)
+    .then((d) => {
+      for(var i = 0; i < d.points.length; i++) d.points[i].id = i;
+      console.log(d)
+      setData(d)
     })
   }
 
@@ -60,13 +65,22 @@ function App() {
     <div className="App">
       <main style={{width: "100%", height: "100vh"}}>
         {/* <ModalPanel /> */}
-        <main className="container-fluid">
         {data == null && <Loader />}
-        {data != null && <Map points={data.points} setPointsListInPanel={setPointsListInPanel}/>}
+        {data != null &&
+        <main className="container-fluid">
+  
+        
         {isOpenPanel && <Panel onChangePanel={onChangePanel} panelInfo={panelInfo} onOpenPlace={onOpenPlace} onClosePlace={onClosePlace} list={pointsOnPanel}/>}
-        {!isOpenPanel && <button className=" ml-3 mt-3 btn btn-secondary" style={{position: "absolute", top: "0",}}onClick={() => onChangePanel(true)}><MenuIcon size="24px"/></button>}
+        
+        <Switch>
+          <Route path='/catalog'><Catalog points={data.points} /></Route>
+          <Route path='/map'><Map points={data.points} setPointsListInPanel={setPointsListInPanel} /></Route>
+        </Switch>
+        {!isOpenPanel && <button className=" ml-3 mt-3 btn btn-secondary" style={{position: "absolute", top: "0", zIndex: "999"}}onClick={() => onChangePanel(true)}><MenuIcon size="24px"/></button>}
       </main>
+}
       </main>
+      
     </div>
   );
 }

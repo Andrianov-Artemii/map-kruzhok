@@ -29,7 +29,6 @@ function Map(props)
                     hideIconOnBalloonOpen: true,
                     placemarkId: id,
                 }))
-                props.points.id = id;
             }
 
             collection.events.add('click', function (e) {
