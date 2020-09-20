@@ -24,7 +24,7 @@ function App(props) {
 
   function getPoints()
   {
-    fetch('/data.json')
+    fetch('data.json')
     .then((res) => res.json())
     .catch((res) => null)  
     .then((d) => {
@@ -49,6 +49,11 @@ function App(props) {
     changePanelInfo(null)
   }
 
+
+  const [isFilterAll, setFilterAll] = useState(true)
+  const [isFilterNTI, setFilterNTI] = useState(true)
+  const [isFilterKD, setFilterKD] = useState(true)
+
   function setPointsListInPanel(idList)
   {
     var pointsList = []
@@ -69,12 +74,21 @@ function App(props) {
         {data != null &&
         <main className="container-fluid">
   
-        
-        {isOpenPanel && <Panel onChangePanel={onChangePanel} panelInfo={panelInfo} onOpenPlace={onOpenPlace} onClosePlace={onClosePlace} list={pointsOnPanel}/>}
+
+        {isOpenPanel && <Panel onChangePanel={onChangePanel} panelInfo={panelInfo} onOpenPlace={onOpenPlace} onClosePlace={onClosePlace}  
+          isFilterAll={isFilterAll} setFilterAll={setFilterAll} 
+          isFilterKD={isFilterKD} setFilterKD={setFilterKD} 
+          isFilterNTI={isFilterNTI} setFilterNTI={setFilterNTI} 
+          length={data.points.length}
+          list={pointsOnPanel}/>}
         
         <Switch>
           <Route path='/catalog'><Catalog points={data.points} /></Route>
-          <Route path='/map'><Map points={data.points} setPointsListInPanel={setPointsListInPanel} /></Route>
+          <Route path='/map'><Map points={data.points} setPointsListInPanel={setPointsListInPanel}
+            isFilterAll={isFilterAll} setFilterAll={setFilterAll} 
+            isFilterKD={isFilterKD} 
+            isFilterNTI={isFilterNTI}
+            /></Route>
         </Switch>
         {!isOpenPanel && <button className=" ml-3 mt-3 btn btn-secondary" style={{position: "absolute", top: "0", zIndex: "999"}}onClick={() => onChangePanel(true)}><MenuIcon size="24px"/></button>}
       </main>

@@ -13,6 +13,7 @@
     "ymaps": "^0.2.1"
   },
   "scripts": {
+    "run": "react-scripts start",
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },

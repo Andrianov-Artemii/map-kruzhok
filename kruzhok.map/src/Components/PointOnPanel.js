@@ -32,14 +32,24 @@ function PointOnPanel(props)
             <p href="#!" class="list-group-item list-group-item-secondary">Существующий кружок</p>
             </div>
         {props.panelInfo.kd != 0 && 
+        <div>
             <div class="list-group mb-2">
-            <p href="#!" class="list-group-item list-group-item-success">Кружок НТИ</p>
+            <a className="list-group-item list-group-item-success text-left" data-toggle="collapse" href={"#pointkd"+props.panelInfo.id} aria-expanded="true" aria-controls="collapseOne">
+            Кружок НТИ
+            </a>
             </div>
+            <div id={"pointkd"+props.panelInfo.id} class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-body">
+                    <p>{props.panelInfo.description}</p>
+                </div>
+            </div>
+        </div>
         }
-        {props.panelInfo.kd != 0 && 
+        {props.panelInfo.nti != 0 && 
             <div class="list-group mb-2">
             <p href="#!" class="list-group-item list-group-item-primary">Площадка подготовки к ОКДНТИ</p>
-            </div>
+        </div>
+          
         }
         </div>
     )
