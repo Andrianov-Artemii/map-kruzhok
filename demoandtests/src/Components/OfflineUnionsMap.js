@@ -80,6 +80,7 @@ function OfflineUnionsMap(props)
                 }
                 query.type = target.options._name
                 query.pointid = pointsOnClickTarget
+                window.history.pushState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
             })     
         })
     }

@@ -3,10 +3,12 @@ import {Route, Switch} from 'react-router-dom'
 import OnlineUnioniCatalog from './OnlineUnionsCatalog'
 import OfflineUnionsMap from './OfflineUnionsMap'
 import KruzhokPage from './KruzhokPage'
+import KruzhokNTIPage from './KruzhokNTIPage'
 
 function Routes(props)
 {
     const data = props.data
+    const datakd = props.datakd
     console.log(data)
     return(
 
@@ -14,6 +16,7 @@ function Routes(props)
             <Route path="/catalog" render={props=>  <OnlineUnioniCatalog data={data} {...props}/>} />
             <Route path="/map" render={props=>  <OfflineUnionsMap data={data} {...props}/>} />
             <Route path="/kr" render={props=>  <KruzhokPage data={data} {...props}/>} />
+            <Route path="/krkd" render={props=>  <KruzhokNTIPage datakd={datakd} data={data} {...props}/>} />
         </Switch>
     )
 }

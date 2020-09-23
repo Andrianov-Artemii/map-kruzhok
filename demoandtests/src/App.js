@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       <Header />
       {data === null && <div>Загрузка...</div>}
-      {data !== null && <Routes data={data.points} />}
+      {data !== null && <Routes data={data.points} datakd={data.kdpoints}/>}
     </div>
   );
 }
