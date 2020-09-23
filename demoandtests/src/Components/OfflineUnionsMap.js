@@ -6,7 +6,7 @@ function OfflineUnionsMap(props)
 {
     const[map, setMap] = useState(null)
     const[placemarks, setPlacemarks] = useState([])
-    useEffect(() => {createMap(options)}, [])
+    useEffect(() => {createMap()}, [])
     const query = queryString.parse(props.location.search)
     const data = setData()
     function setData()
@@ -15,32 +15,33 @@ function OfflineUnionsMap(props)
 
         if(query.krev == 1){
             var d = props.data
-            d.map(el => current_data.push(d))
+            d.map(el => current_data.push(el))
         }
         if(query.krkd == 1){
             var d = props.data.filter(element => element.kd == 1)
-            d.map(el => current_data.push(d))
+            d.map(el => current_data.push(el))
         }
         if(query.krnti == 1){
             var d = props.data.filter(element => element.nti == 1)
-            d.map(el => current_data.push(d))
+            d.map(el => current_data.push(el))
         }
-
-        console.log(current_data[0])
-        return current_data[0]
+        if(current_data.length == 0) current_data = props.data
+        console.log(current_data)
+        return current_data
     }
 
-    console.log(data[0][17])
 
-    function createMap(options)
+    function createMap()
     {
-            ymaps.load().then(maps => {
-                setMap(new maps.Map(options.container, {
-                center: [-8.369326, 115.166023],
-                zoom: 7,
-            /// controls: []
-              }))
-            })
+        if(query.zoom == undefined) query.zoom = 7
+        if(query.corx == undefined) query.corx = 55.733
+        if(query.cory == undefined) query.cory = 37.588
+        ymaps.load().then(maps => {
+            setMap(new maps.Map('kruzhok-map', {
+            center: [query.corx, query.cory],
+            zoom: query.zoom,
+            }))
+        })
     }
         
     setCollections()
@@ -70,25 +71,20 @@ function OfflineUnionsMap(props)
             collection.events.add('click', function (e) {
                 e.preventDefault()
                 var target = e.get('target')
-                var pointsList = [] 
-                console.log(target.options)
-                window.location.search += "geo=" + target.id;
-               
-            })            
+                var pointsOnClickTarget = [] 
+                if(target.options._name == 'cluster') {       
+                    target.getGeoObjects().map( point => pointsOnClickTarget.push(point.properties.get('placemarkId')));
+                }
+                else if(target.options._name == 'geoObject'){
+                    pointsOnClickTarget.push(target.properties.get('placemarkId'))
+                }
+                query.type = target.options._name
+                query.pointid = pointsOnClickTarget
+            })     
         })
     }
        
     }
-
-    //Map generate options
-    var options =
-    {
-        container: 'kruzhok-map',
-        x: 0,
-        y: 0,
-        zoom: 7
-    }
-    //Start to generate map
     
 
 
