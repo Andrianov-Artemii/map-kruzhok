@@ -25,8 +25,7 @@ function OfflineUnionsMap(props)
             var d = props.data.filter(element => element.nti == 1)
             d.map(el => current_data.push(el))
         }
-        if(current_data.length == 0) current_data = props.data
-        console.log(current_data)
+        //if(current_data.length == 0) current_data = props.data
         return current_data
     }
 
@@ -73,14 +72,18 @@ function OfflineUnionsMap(props)
                 var target = e.get('target')
                 var pointsOnClickTarget = [] 
                 if(target.options._name == 'cluster') {       
-                    target.getGeoObjects().map( point => pointsOnClickTarget.push(point.properties.get('placemarkId')));
+                    target.getGeoObjects().map( point => pointsOnClickTarget.push(point.properties.get('placemarkId')))
                 }
                 else if(target.options._name == 'geoObject'){
                     pointsOnClickTarget.push(target.properties.get('placemarkId'))
                 }
                 query.type = target.options._name
                 query.pointid = pointsOnClickTarget
-                window.history.pushState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
+                query.corx = target.geometry.getCoordinates()[0]
+                query.cory = target.geometry.getCoordinates()[1]
+                
+                window.location.href = queryString.stringifyUrl({url: '/map', query: query})
+                //window.history.replaceState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
             })     
         })
     }
