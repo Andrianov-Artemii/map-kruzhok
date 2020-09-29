@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import ExitIcon from './Icons/ExitIcon'
 import OnlineUnioniCard from './OnlineUnionsCard'
@@ -9,22 +9,21 @@ function Panel(props)
 {
     var query = queryString.parse(props.location.search)
     var data = []
-    data =  setData()
+    data = setData();
 
-    window.onpopstate = function(event) { setData() }
     function setData()
     {
         console.log("redraw")
         var current_data = []
         if(query.type == "cluster")
-        if(query.pointid != undefined)
             query.pointid.map(id => {
                 
                 var d = props.data.filter(point => point.id == id)
                 d.map(point => current_data.push(point))
             })
-        else current_data.push(props.data[query.pointid])
-            
+        else current_data.push(props.data[query.pointid]) 
+        if(current_data[0] == undefined) current_data = []
+        console.log(current_data)  
         return current_data
     }
 
@@ -35,7 +34,7 @@ function Panel(props)
             case "kd":  query.krkd = (query.krkd == 1) ? 0 : 1; break
             case "nti":  query.krnti = (query.krnti == 1) ? 0 : 1; break
         } 
-        //window.location.href = queryString.stringifyUrl({url: '/map', query: query})
+        window.location.href = queryString.stringifyUrl({url: '/map', query: query})
         //window.history.pushState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
     }
 

@@ -7,6 +7,7 @@ import KruzhokNTIPage from './KruzhokNTIPage'
 import Panel from './Panel'
 
 import MenuIcon from './Icons/MenuIcon';
+import Header from './Header'
 
 function Routes(props)
 {
@@ -16,16 +17,33 @@ function Routes(props)
     return(
         <main>
         <Switch>
-            <Route path="/catalog" render={props=>  <OnlineUnioniCatalog data={data} {...props}/>} />
+            <Route path="/catalog" render={props=>
+                <catalog>
+                    <Header />
+                    <OnlineUnioniCatalog data={data} {...props}/>  
+                </catalog>
+            }/>
             <Route path="/map" render={props=> 
                 <map>
-                    <Panel data={data} {...props} onChangePanel={setOpenPanel}/>
+                    {isOpenPanel && <Panel data={data} {...props} onChangePanel={setOpenPanel}/>}
                     <OfflineUnionsMap data={data} {...props}/>
                 </map>
                 } 
             />
-            <Route path="/kr" render={props=>  <KruzhokPage data={data} {...props}/>} />
-            <Route path="/krkd" render={props=>  <KruzhokNTIPage datakd={datakd} data={data} {...props}/>} />
+            <Route path="/kr" render={props=>  
+                <page>
+                    <Header />
+                    <KruzhokPage data={data} {...props}/> 
+                </page>
+                } 
+            />
+            <Route path="/krkd" render={props=>
+                <page>
+                    <Header />
+                    <KruzhokNTIPage datakd={datakd} data={data} {...props}/>} 
+                </page>
+                } 
+            />
             <Redirect from="/" to="/map?krev=1&krkd=1&krnti=1" />
         </Switch>
       
