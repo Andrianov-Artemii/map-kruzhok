@@ -8,6 +8,7 @@ import Panel from './Panel'
 
 import MenuIcon from './Icons/MenuIcon';
 import Header from './Header'
+import KruzhokNTIDescription from './KruzhokNTIDescription'
 
 function Routes(props)
 {
@@ -40,7 +41,14 @@ function Routes(props)
             <Route path="/krkd" render={props=>
                 <page>
                     <Header />
-                    <KruzhokNTIPage datakd={datakd} data={data} {...props}/>} 
+                    <KruzhokNTIPage datakd={datakd} data={data} {...props}/>
+                </page>
+                } 
+            />
+            <Route path="/krkddesc" render={props=>
+                <page>
+                    <Header />
+                    <KruzhokNTIDescription/>
                 </page>
                 } 
             />

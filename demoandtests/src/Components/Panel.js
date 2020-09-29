@@ -67,7 +67,7 @@ function Panel(props)
             </div>
 
 
-            {data.length == 0 &&
+            {   data.length == 0 &&
             <section className="mt-5">
                 <h3>Добро пожаловать в Карту Кружков</h3>
                 <p>

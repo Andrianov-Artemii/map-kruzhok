@@ -1,4 +1,3 @@
-import { getElementError } from '@testing-library/react'
 import React, { useEffect, useState } from 'react'
 import ymaps from 'ymaps'
 const queryString = require('query-string')
@@ -25,19 +24,21 @@ function OfflineUnionsMap(props) {
             d.map(el => current_data.push(el))
         }
         //if(current_data.length == 0) current_data = props.data
+        console.log(current_data)
         return current_data
     }
 
     function currentData() {
         var current_data = []
+        if (query.pointid == undefined) current_data = []
         if (query.type == "cluster")
             query.pointid.map(id => {
-
                 var d = props.data.filter(point => point.id == id)
                 d.map(point => current_data.push(point))
             })
         else current_data.push(props.data[query.pointid])
-        if(current_data[0] == undefined) currentData = [] 
+
+        if (current_data[0] == undefined) currentData = []
         return current_data
     }
     function bound(current_data) {
@@ -58,6 +59,7 @@ function OfflineUnionsMap(props) {
     function createMap() {
         if (query.corx == undefined) query.corx = 55.733
         if (query.cory == undefined) query.cory = 37.588
+        if (query.zoom == undefined) query.zoom = 7
         ymaps.load().then(maps => {
             setMap(new maps.Map('kruzhok-map', {
                 center: [query.corx, query.cory],
@@ -70,15 +72,6 @@ function OfflineUnionsMap(props) {
 
     function setCollections() {
         if (map != null) {
-            var current_data = currentData()
-            if (current_data != [])
-            {
-                var current_bound = bound(current_data)
-                console.log()
-            
-                map.setBounds([[current_bound[0], current_bound[1]], [current_bound[2], current_bound[3]]])
-                
-            }
             ymaps.load().then(maps => {
                 var collection = new maps.Clusterer({
                     iconColor: 'black',
@@ -113,9 +106,15 @@ function OfflineUnionsMap(props) {
                     query.corx = target.geometry.getCoordinates()[0]
                     query.cory = target.geometry.getCoordinates()[1]
                     query.zoom = map.getZoom();
-                    //window.history.pushState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
                     window.location.href = queryString.stringifyUrl({ url: '/map', query: query })
                 })
+
+                if (query.type != undefined) {
+                    var current_data = currentData()
+                    var current_bound = bound(current_data)
+                    console.log()
+                    map.setBounds([[current_bound[0], current_bound[1]], [current_bound[2], current_bound[3]]])
+                }
             })
         }
 

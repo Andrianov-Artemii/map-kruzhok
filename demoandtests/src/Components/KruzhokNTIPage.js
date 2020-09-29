@@ -5,7 +5,7 @@ function KruzhokNTIPage(props)
 {
     const query = queryString.parse(props.location.search)
     const element = props.data[query.krid]
-    console.log(props.datakd)
+    if(props.datakd.filter(el => el.id == query.krid).length == 0) window.location.href = "/krkddesc"
     const elementkd = props.datakd.filter(el => el.id == query.krid)[0]
     return(
         <section className="container mt-5"> 
