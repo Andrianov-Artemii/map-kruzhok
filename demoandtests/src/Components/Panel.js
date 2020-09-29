@@ -38,6 +38,8 @@ function Panel(props)
         //window.history.pushState(null, null, queryString.stringifyUrl({url: '/map', query: query}))
     }
 
+    
+
     return(
         <div className="container-fluid panel" style={{position: "absolute", top: "0", height: "100vh", background: "white", zIndex: "999"}}>
                 <div className="d-flex justify-content-end"><button className="btn" onClick={() => props.onChangePanel(false)}><ExitIcon size="24px" /></button></div>  
@@ -49,17 +51,17 @@ function Panel(props)
                 <div className="container mb-3">
                 <div className="mt-4 d-flex justify-content-between">
                     <div className="form-check d-flex-justify-content-center align-items-center">
-                        <input type="checkbox" id="all" checked={Boolean(query.krev)} onClick={ () => setFilter("ev") }/>
+                        <input type="checkbox" id="all" checked={(query.krev == 0) ? false : true} onClick={ () => setFilter("ev") }/>
                         <label className="form-check-label ml-2" for="all" >Существующий кружок</label>
                     </div>
 
                     <div className="form-check d-flex-justify-content-center align-items-center">
-                        <input type="checkbox" id="all" checked={Boolean(query.krkd)} onClick={ () => setFilter("kd") }/>
+                        <input type="checkbox" id="all" checked={false} onClick={ () => setFilter("kd") }/>
                         <label className="form-check-label ml-2" for="all" > Кружок НТИ</label>
                     </div>
 
                     <div className="form-check d-flex-justify-content-center align-items-center">
-                        <input type="checkbox" id="all" checked={Boolean(query.krnti)} onClick={ () => setFilter("nti") }/>
+                        <input type="checkbox" id="all" checked={true} onClick={ () => setFilter("nti") }/>
                         <label className="form-check-label ml-2" for="all" > Площадка поготовки к ОНТИ </label>
                     </div>
                     
