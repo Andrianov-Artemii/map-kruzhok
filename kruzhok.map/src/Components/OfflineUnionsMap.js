@@ -64,6 +64,7 @@ function OfflineUnionsMap(props) {
             setMap(new maps.Map('kruzhok-map', {
                 center: [query.corx, query.cory],
                 zoom: query.zoom,
+                // controls: ['zoomControl', 'geolocationControl', 'typeSelector', '']
             }))
         })
     }

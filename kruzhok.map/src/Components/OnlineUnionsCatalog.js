@@ -12,7 +12,7 @@ function OnlineUnioniCatalog(props)
         <section className="container">
             <div className="row">
                 {data.map(element => 
-                    <OnlineUnioniCard element={element} classes="col-3"/>
+                    <OnlineUnioniCard element={element} classes="col-sm-12 col-lg-3"/>
                 )}
             </div>
         </section>

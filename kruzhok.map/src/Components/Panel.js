@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
+import Header from './Header'
 import ExitIcon from './Icons/ExitIcon'
 import OnlineUnioniCard from './OnlineUnionsCard'
 
@@ -41,29 +42,26 @@ function Panel(props)
     return(
         <div className="container-fluid panel" style={{position: "absolute", top: "0", height: "100vh", background: "white", zIndex: "999"}}>
                 <div className="d-flex justify-content-end"><button className="btn" onClick={() => props.onChangePanel(false)}><ExitIcon size="24px" /></button></div>  
-                <header className="container-fluid">
-                    <Link className="mr-2" to={"/map?krev=1&krkd=1&krnti=1"}>Карта Кружков</Link>
-                    <Link to={"/catalog?filters=all"}>Каталог Кружков</Link>
-                </header>
+                <Header />
 
                 <div className="container mb-3">
                 <div className="mt-4 d-flex justify-content-between">
                     <div className="form-check d-flex-justify-content-center align-items-center">
                         {query.krev == 1 && <input type="checkbox" id="all" checked onClick={ () => setFilter("ev") }/>}
                         {query.krev == 0 && <input type="checkbox" id="all" onClick={ () => setFilter("ev") }/>}
-                        <label className="form-check-label ml-2" for="all" >Существующий кружок</label>
+                        <label className="form-check-label ml-2" for="all" >Участники Конкурса Кружков</label>
                     </div>
 
                     <div className="form-check d-flex-justify-content-center align-items-center">
                         {query.krkd == 1 && <input type="checkbox" id="all" checked onClick={ () => setFilter("kd") }/>}
                         {query.krkd == 0 && <input type="checkbox" id="all" onClick={ () => setFilter("kd") }/>}
-                        <label className="form-check-label ml-2" for="all" > Кружок НТИ</label>
+                        <label className="form-check-label ml-2" for="all" > Кружки НТИ</label>
                     </div>
 
                     <div className="form-check d-flex-justify-content-center align-items-center">
                         {query.krnti == 1 && <input type="checkbox" id="all" checked onClick={ () => setFilter("nti") }/>}
                         {query.krnti == 0 && <input type="checkbox" id="all" onClick={ () => setFilter("nti") }/>}
-                        <label className="form-check-label ml-2" for="all" > Площадка поготовки к ОНТИ </label>
+                        <label className="form-check-label ml-2" for="all" > Площадки поготовки к ОНТИ </label>
                     </div>
                     
                 </div>
